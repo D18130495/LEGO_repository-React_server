@@ -5,6 +5,7 @@ const express = require('express')
 const md5 = require('blueimp-md5')
 
 const UserModel = require('../models/UserModel')
+const CategoryModel = require('../models/CategoryModel')
 
 // get the router
 const router = express.Router()
@@ -39,6 +40,46 @@ router.post('/login', (req, res) => {
       console.error('lognin error.', error)
       // connection failed message
       res.send({status: 1, msg: 'login error, please try again.'})
+    })
+})
+
+//-------------------------------category--------------------------------
+// add category
+router.post('/manage/category/add', (req, res) => {
+  const {categoryName, parentId} = req.body
+  CategoryModel.create({name: categoryName, parentId: parentId || '0'})
+    .then(category => {
+      res.send({status: 0, data: category})
+    })
+    .catch(error => {
+      console.error('Add category error.', error)
+      res.send({status: 1, msg: 'Add category error, try again.'})
+    })
+})
+
+// get category list
+router.get('/manage/category/list', (req, res) => {
+  const parentId = req.query.parentId || '0'
+  CategoryModel.find({parentId})
+    .then(categorys => {
+      res.send({status: 0, data: categorys})
+    })
+    .catch(error => {
+      console.error('Get category list error.', error)
+      res.send({status: 1, msg: 'Get category list error, try again.'})
+    })
+})
+
+// update category list
+router.post('/manage/category/update', (req, res) => {
+  const {categoryId, categoryName} = req.body
+  CategoryModel.findOneAndUpdate({_id: categoryId}, {name: categoryName})
+    .then(oldCategory => {
+      res.send({status: 0})
+    })
+    .catch(error => {
+      console.error('Update category list, error.', error)
+      res.send({status: 1, msg: 'Update category list, error, try again.'})
     })
 })
 
