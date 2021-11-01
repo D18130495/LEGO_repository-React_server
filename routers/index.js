@@ -83,4 +83,19 @@ router.post('/manage/category/update', (req, res) => {
     })
 })
 
+//----------------------------Search Set Info-------------------------
+router.get('/manage/product/search', (req, res) => {
+  const {pageNum, pageSize, searchName} = req.query
+  let contition = {name: new RegExp(`^.*${searchName}.*$`)}
+  ProductModel.find(contition)
+    .then(products => {
+      res.send({status: 0, data: pageFilter(products, pageNum, pageSize)})
+    })
+    .catch(error => {
+      console.error('Search set Info error', error)
+      res.send({status: 1, msg: 'Search set Info error, please try again'})
+    })
+})
+
+
 module.exports = router
