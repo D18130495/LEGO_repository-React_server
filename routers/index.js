@@ -99,6 +99,19 @@ router.get('/manage/category/year', (req, res) => {
 
 
 
+//----------------------------operation with set info---------------------------------
+//-----------------------------------add set info-------------------------------------
+router.post('/manage/set/add', (req, res) => {
+  const set = req.body
+  SetModel.create(set)
+    .then(set => {
+      res.send({status: 0, data: set})
+    })
+    .catch(error => {
+      console.error('Add set error', error)
+      res.send({status: 1, msg: 'Add set error'})
+    })
+})
 
 //----------------------------get the set info by pagination--------------------------
 router.get('/manage/set/list', (req, res) => {
@@ -143,5 +156,6 @@ function pageFilter(arr, pageNum, pageSize) { // arr: data from database, pageNu
 
   return {pageNum, total, pages, pageSize, list}
 }
+//-----------------------------------------------------------------------------------------------------------------
 
 module.exports = router
