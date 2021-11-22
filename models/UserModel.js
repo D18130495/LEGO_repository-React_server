@@ -1,11 +1,9 @@
-/*
-  model for user 
- */
-// import mongoose and md5 encryption
+// UserModel use to operate user
+// 1. import mongoose and md5 encryption
 const mongoose = require('mongoose')
 const md5 = require('blueimp-md5')
 
-// User Schema
+// 2. User schema
 const userSchema = new mongoose.Schema({
   username: {type: String, required: true},
   password: {type: String, required: true},
@@ -15,7 +13,7 @@ const userSchema = new mongoose.Schema({
   role_id: String
 })
 
-// create Model in the mogodb
+// 3. collection(users) of MongoDB
 const UserModel = mongoose.model('users', userSchema)
 
 // defaule root user: admin/123456
@@ -28,5 +26,5 @@ UserModel.findOne({username: 'admin'}).then(user => {
   }
 })
 
-// expore user model
+// 4. export Model
 module.exports = UserModel

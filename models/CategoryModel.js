@@ -1,17 +1,15 @@
-/*
-  model for category
- */
-// import mongoose
+// CategoryModel use to operate category
+// 1. import mongoose
 const mongoose = require('mongoose')
 
-// Category Schema
+// 2. category Schema
 const categorySchema = new mongoose.Schema({
-  name: {type: String, required: true},
-  parentId: {type: String, required: true, default: '0'}
+  name: {type: String, required: true}, // the name of the category
+  parentId: {type: String, required: true, default: '0'} // the parent ID of the category
 })
 
-// create Model in the mogodb
+// 3. collection(categorys) of MongoDB
 const CategoryModel = mongoose.model('categorys', categorySchema)
 
-// expore user model
+// 4. export Model
 module.exports = CategoryModel
