@@ -108,8 +108,34 @@ router.post('/manage/set/add', (req, res) => {
       res.send({status: 0, data: set})
     })
     .catch(error => {
-      console.error('Add set error', error)
-      res.send({status: 1, msg: 'Add set error'})
+      console.error('Add set info error', error)
+      res.send({status: 1, msg: 'Add set info error'})
+    })
+})
+
+//-----------------------------------update set info-------------------------------------
+router.post('/manage/set/update', (req, res) => {
+  const set = req.body
+  SetModel.findOneAndUpdate({_id: set._id}, set)
+    .then(result => {
+      res.send({status: 0})
+    })
+    .catch(error => {
+      console.error('Update set info error', error)
+      res.send({status: 1, msg: 'Update set info error'})
+    })
+})
+
+//-----------------------------------delete set info-------------------------------------
+router.get('/manage/set/delete', (req, res) => {
+  const setID = req.query.setID
+  SetModel.deleteOne({_id: setID})
+    .then(result => {
+      res.send({status: 0})
+    })
+    .catch(error => {
+      console.error('Delete set info error', error)
+      res.send({status: 1, msg: 'Delete set info error'})
     })
 })
 
