@@ -158,4 +158,6 @@ function pageFilter(arr, pageNum, pageSize) { // arr: data from database, pageNu
 }
 //-----------------------------------------------------------------------------------------------------------------
 
+require('./imageUpload')(router)
+
 module.exports = router

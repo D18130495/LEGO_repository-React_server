@@ -3,7 +3,7 @@ const multer = require('multer')
 const path = require('path')
 const fs = require('fs')
 
-const dirPath = path.join(__dirname, '..', 'image/upload')
+const dirPath = path.join(__dirname, '..', 'images')
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -47,7 +47,6 @@ module.exports = function fileUpload(router) {
           url: 'http://localhost:41571/upload/' + file.filename
         }
       })
-
     })
   })
 
