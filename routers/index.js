@@ -97,6 +97,19 @@ router.get('/manage/category/year', (req, res) => {
     })
 })
 
+router.get('/manage/category/year/delete', (req, res) => {
+  const yearID = req.query.yearID
+  CategoryModel.deleteOne({_id: yearID})
+    .then(result => {
+      res.send({status: 0})
+    })
+    .catch(error => {
+      console.error('Delete category year error', error)
+      res.send({status: 1, msg: 'Delete category year error'})
+    })
+})
+//------------------------------------------------------------------------------------
+
 
 
 //----------------------------operation with set info---------------------------------
