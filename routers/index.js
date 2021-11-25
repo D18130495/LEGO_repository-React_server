@@ -197,6 +197,22 @@ function pageFilter(arr, pageNum, pageSize) { // arr: data from database, pageNu
 }
 //-----------------------------------------------------------------------------------------------------------------
 
+
+
+
+//--------------------------------------------operation with user--------------------------------------------------
+// get user list
+router.get('/manage/user/list', (req, res) => {
+  UserModel.find()
+    .then(users => {
+      res.send({status: 0, data: users})
+    })
+    .catch(error => {
+      console.error('Get user list error', error)
+      res.send({status: 1, msg: 'Get user list error'})
+    })
+})
+//-----------------------------------------------------------------------------------------------------------------
 require('./imageUpload')(router)
 
 module.exports = router

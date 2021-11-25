@@ -5,12 +5,12 @@ const md5 = require('blueimp-md5')
 
 // 2. User schema
 const userSchema = new mongoose.Schema({
-  username: {type: String, required: true},
-  password: {type: String, required: true},
-  phone: String,
-  email: String,
-  create_time: {type: Number, default: Date.now},
-  role_id: String
+  username: {type: String, required: true}, // user name 
+  password: {type: String, required: true}, // user password
+  phone: String, // user phone number
+  email: String, // user email
+  create_time: {type: Number, default: Date.now}, // create time
+  menus: Array // user can visit which function
 })
 
 // 3. collection(users) of MongoDB
