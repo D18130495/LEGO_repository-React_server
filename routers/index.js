@@ -212,6 +212,19 @@ router.get('/manage/user/list', (req, res) => {
       res.send({status: 1, msg: 'Get user list error'})
     })
 })
+
+// update user
+router.post('/manage/user/update', (req, res) => {
+  const user = req.body
+  UserModel.findOneAndUpdate({_id: user._id}, user)
+    .then(result => {
+      res.send({status: 0})
+    })
+    .catch(error => {
+      console.error('Update user info error', error)
+      res.send({status: 1, msg: 'Update user info error'})
+    })
+})
 //-----------------------------------------------------------------------------------------------------------------
 require('./imageUpload')(router)
 

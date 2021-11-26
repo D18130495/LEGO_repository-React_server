@@ -17,13 +17,14 @@ const userSchema = new mongoose.Schema({
 const UserModel = mongoose.model('users', userSchema)
 
 // defaule root user: admin/123456
-UserModel.findOne({username: 'admin'}).then(user => {
-  if(!user) {
-    UserModel.create({username: 'admin', password: md5('123456')})
-      .then(user => {
-        console.log('Root user: {username : admin, password : 123456}')
-      })
-  }
+UserModel.findOne({username: 'admin'})
+  .then(user => {
+    if(!user) {
+      UserModel.create({username: 'admin', password: md5('123456')})
+        .then(user => {
+          console.log('Root user: {username : admin, password : 123456}')
+        })
+    }
 })
 
 // 4. export Model
