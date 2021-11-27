@@ -140,8 +140,8 @@ router.post('/manage/set/update', (req, res) => {
 })
 
 //-----------------------------------delete set info-------------------------------------
-router.get('/manage/set/delete', (req, res) => {
-  const setID = req.query.setID
+router.post('/manage/set/delete', (req, res) => {
+  const {setID} = req.body
   SetModel.deleteOne({_id: setID})
     .then(result => {
       res.send({status: 0})
@@ -201,7 +201,7 @@ function pageFilter(arr, pageNum, pageSize) { // arr: data from database, pageNu
 
 
 //--------------------------------------------operation with user--------------------------------------------------
-// get user list
+//--------------------------------------------get user list--------------------------------------------------------
 router.get('/manage/user/list', (req, res) => {
   UserModel.find()
     .then(users => {
@@ -213,7 +213,7 @@ router.get('/manage/user/list', (req, res) => {
     })
 })
 
-// update user
+//---------------------------------------------update user-----------------------------------------------------------
 router.post('/manage/user/update', (req, res) => {
   const user = req.body
   UserModel.findOneAndUpdate({_id: user._id}, user)
@@ -223,6 +223,19 @@ router.post('/manage/user/update', (req, res) => {
     .catch(error => {
       console.error('Update user info error', error)
       res.send({status: 1, msg: 'Update user info error'})
+    })
+})
+
+//----------------------------------------------delete user-----------------------------------------------------------
+router.post('/manage/user/delete', (req, res) => {
+  const {userID} = req.body
+  UserModel.deleteOne({_id: userID})
+    .then(result => {
+      res.send({status: 0})
+    })
+    .catch(error => {
+      console.error('Delete user error', error)
+      res.send({status: 1, msg: 'Delete user error'})
     })
 })
 //-----------------------------------------------------------------------------------------------------------------
