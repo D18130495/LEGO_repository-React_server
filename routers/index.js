@@ -213,6 +213,19 @@ router.get('/manage/user/list', (req, res) => {
     })
 })
 
+//-----------------------------------------------add user-----------------------------------------------------------
+router.post('/manage/user/add', (req, res) => {
+  const {password} = req.body
+  UserModel.create({...req.body, password: md5(password)})
+    .then(user => {
+      res.send({status: 0, data: user})
+    })
+    .catch(error => {
+      console.error('Add user error', error)
+      res.send({status: 1, msg: 'Add user error'})
+    })
+})
+
 //---------------------------------------------update user-----------------------------------------------------------
 router.post('/manage/user/update', (req, res) => {
   const user = req.body
