@@ -17,29 +17,10 @@ router.post('/login', (req, res) => {
   // use username and password to find a user
   UserModel.findOne({username, password: md5(password)})
     .then(user => {
-      if (user) { // login successful
-        // generate a cookie 'userid' and store in the browser(1day)
-        res.cookie('userid', user._id, {maxAge: 1000 * 60 * 60 * 24})
-        if (user.role_id) {
-          RoleModel.findOne({_id: user.role_id})
-            .then(role => {
-              user._doc.role = role
-              console.log('role user', user)
-              res.send({status: 0, data: user})
-            })
-        } else {
-          user._doc.role = {menus: []}
-          // login successful and send back response message
-          res.send({status: 0, data: user})
-        }
-
-      } else {// login failed.
-        res.send({status: 1, msg: 'username or password is incorrect.'})
-      }
+      res.send({status: 0, data: user})
     })
     .catch(error => {
       console.error('lognin error.', error)
-      // connection failed message
       res.send({status: 1, msg: 'login error'})
     })
 })
@@ -97,6 +78,7 @@ router.get('/manage/category/year', (req, res) => {
     })
 })
 
+// delete the category year 
 router.get('/manage/category/year/delete', (req, res) => {
   const yearID = req.query.yearID
   CategoryModel.deleteOne({_id: yearID})
@@ -165,7 +147,7 @@ router.get('/manage/set/list', (req, res) => {
     })
 })
 
-//----------------------------Search Set Info and pagincation-------------------------
+//----------------------------Search Set Info and pagination-------------------------
 router.get('/manage/set/search', (req, res) => {
   const {pageNum, pageSize, searchName} = req.query // get the searchName, pageSize and pageNum from request
   let condition = {name: new RegExp(`^.*${searchName}.*$`)} // create condition, for fuzzy query

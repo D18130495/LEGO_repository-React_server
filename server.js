@@ -17,10 +17,6 @@ app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}))
 app.use(express.json()) // json structure: {name: admin, pwd: 123456}
 
-// use cookie
-const cookieParser = require('cookie-parser')
-app.use(cookieParser())
-
 // use router
 const indexRouter = require('./routers')
 app.use('/', indexRouter)  
